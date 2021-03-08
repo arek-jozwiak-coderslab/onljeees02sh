@@ -16,4 +16,8 @@ public class BookDao {
     public void save(Book book) {
         entityManager.persist(book);
     }
+
+    public Book findById(long id) {
+        return entityManager.find(Book.class, id);
+    }
 }
