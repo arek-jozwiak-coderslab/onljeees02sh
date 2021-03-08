@@ -19,21 +19,21 @@ public class BookController {
     @RequestMapping("/add")
     @ResponseBody
     public String addBook() {
-        Book book = new Book();
-        book.setTitle("Thinking in Java");
-        book.setAuthor("Bruce Eckel");
+        ServiceBook serviceBook = new ServiceBook();
+        serviceBook.setTitle("Thinking in Java");
+        serviceBook.setAuthor("Bruce Eckel");
 
-        bookService.save(book);
+        bookService.save(serviceBook);
 
-        return "ok" + book.getId();
+        return "ok" + serviceBook.getId();
     }
 
     @RequestMapping("/get/{id}")
     @ResponseBody
     public String getBook(@PathVariable long id) {
-        Book book = bookService.finfById(id);
+        ServiceBook serviceBook = bookService.finfById(id);
 
-        System.out.println(book.getTitle() + " " + book.getAuthor());
+        System.out.println(serviceBook.getTitle() + " " + serviceBook.getAuthor());
         return "ok";
     }
 

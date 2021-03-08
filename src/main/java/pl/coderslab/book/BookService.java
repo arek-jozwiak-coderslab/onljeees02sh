@@ -5,20 +5,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookService {
 
-    private final BookDao bookDao;
+    private final ServiceBookDao serviceBookDao;
 
-    public BookService(BookDao bookDao) {
-        this.bookDao = bookDao;
+    public BookService(ServiceBookDao serviceBookDao) {
+        this.serviceBookDao = serviceBookDao;
     }
 
-    public void save(Book book) {
+    public void save(ServiceBook serviceBook) {
         // create PZ
-        bookDao.save(book);
+        serviceBookDao.save(serviceBook);
         //send email to newspetter
         // send info to marketing compamnny
     }
 
-    public Book finfById(long id) {
-        return bookDao.findById(id);
+    public ServiceBook finfById(long id) {
+        return serviceBookDao.findById(id);
     }
 }

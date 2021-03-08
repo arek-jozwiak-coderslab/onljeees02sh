@@ -1,5 +1,6 @@
-package pl.coderslab.book;
+package pl.coderslab.books;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -8,16 +9,17 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-public class BookDao {
+public class PublisherDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public void save(Book book) {
-        entityManager.persist(book);
+    public Publisher findById(Long id) {
+        return entityManager.find(Publisher.class, id);
     }
 
-    public Book findById(long id) {
-        return entityManager.find(Book.class, id);
+
+    public void save(Publisher publisher) {
+        entityManager.persist(publisher);
     }
 }
