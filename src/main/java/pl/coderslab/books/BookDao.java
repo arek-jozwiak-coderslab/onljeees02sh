@@ -5,7 +5,9 @@ import pl.coderslab.book.ServiceBook;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -20,5 +22,18 @@ public class BookDao {
 
     public Book findById(long id) {
         return entityManager.find(Book.class, id);
+    }
+
+    public List<Book> getAll() {
+        return entityManager
+                .createQuery("SELECT b from Book b")
+                .getResultList();
+    }
+
+    public List<Book> getRatingList(int rating) {
+        Query query = entityManager.createQuery("SELECT b from Book b where " +
+                "b.rating=:rag");
+        query.setParameter("rag", rating);
+        return query.getResultList();
     }
 }
