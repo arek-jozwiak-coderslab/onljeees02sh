@@ -32,8 +32,16 @@ public class BookDao {
 
     public List<Book> getRatingList(int rating) {
         Query query = entityManager.createQuery("SELECT b from Book b where " +
-                "b.rating=:rag");
+                "b.rating!=:rag");
         query.setParameter("rag", rating);
         return query.getResultList();
     }
+
+    public List<Book> getListByActiveAndPublisher(Publisher publisher) {
+        Query query = entityManager.createQuery("SELECT b from Book b where " +
+                "b.active=true and b.publisher=:pub");
+        query.setParameter("pub", publisher);
+        return query.getResultList();
+    }
+
 }

@@ -13,6 +13,7 @@ public class Book {
     private String title;
     private int rating;
     private String description;
+    private boolean active;
 
     @ManyToOne
     private Publisher publisher;
