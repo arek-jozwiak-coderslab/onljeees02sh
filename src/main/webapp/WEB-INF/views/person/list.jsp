@@ -7,18 +7,23 @@
     <title>Title</title>
 </head>
 <body>
-
+<a href="<c:url value="/person/form"/> ">dodaj</a>
 <table>
     <tr>
         <th>login</th>
         <th>email</th>
         <th>password</th>
+        <th>action</th>
     </tr>
     <c:forEach items="${people}" var="person">
         <tr>
             <td>${person.login}</td>
             <td>${person.password}</td>
             <td>${person.email}</td>
+            <td>
+                <a href="<c:url value="/person/edit/${person.id}"/> ">edytuj</a>
+                <a href="<c:url value="/person/delete/${person.id}"/> ">usuń</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
