@@ -3,9 +3,7 @@ package pl.coderslab.person;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/person")
@@ -19,30 +17,39 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model){
+    public String list(Model model) {
         model.addAttribute("people", personDao.getAll());
         return "person/list";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editEditForm(@PathVariable long id, Model model) {
+        model.addAttribute("person", personDao.findById(id));
+        return "person/edit";
+    }
+
+    @PostMapping("/update")
+    public String performEditForm(Person person) {
+        personDao.update(person);
+        return "redirect:/person/list";
+    }
+
     @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public String showForm(){
-        return "person/form";
+    public String showForm(Model model) {
+        model.addAttribute("person", new Person());
+        return "person/add";
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String performForm(
-            @RequestParam String login,
-            @RequestParam String password,
-            @RequestParam String email) {
-
-        Person person = new Person();
-        person.setLogin(login);
-        person.setEmail(email);
-        person.setPassword(password);
-
+    public String performForm(Person person) {
         personDao.save(person);
         return "redirect:/person/list";
     }
 
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable long id) {
+        personDao.delete(id);
+        return "redirect:/person/list";
+    }
 
 }

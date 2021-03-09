@@ -31,6 +31,13 @@ public class PersonDao {
                 .getResultList();
     }
 
+    public void update(Person person) {
+        entityManager.merge(person);
+    }
 
-
+    public void delete(long id) {
+        Person byId = findById(id);
+        entityManager.remove(entityManager.contains(byId) ?
+                byId : entityManager.merge(byId));
+    }
 }
