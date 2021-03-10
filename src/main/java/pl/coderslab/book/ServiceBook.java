@@ -1,13 +1,17 @@
 package pl.coderslab.book;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class ServiceBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String title;
+    @Min(3)
     private String author;
     private String isbn;
 

@@ -11,9 +11,11 @@ public class PersonController {
 
 
     private final PersonDao personDao;
+    private final DepartmentDao departmentDao;
 
-    public PersonController(PersonDao personDao) {
+    public PersonController(PersonDao personDao, DepartmentDao departmentDao) {
         this.personDao = personDao;
+        this.departmentDao = departmentDao;
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -36,6 +38,7 @@ public class PersonController {
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String showForm(Model model) {
+        model.addAttribute("departments", departmentDao.getAll());
         model.addAttribute("person", new Person());
         return "person/add";
     }

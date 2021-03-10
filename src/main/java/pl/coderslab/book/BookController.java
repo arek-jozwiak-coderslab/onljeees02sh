@@ -5,13 +5,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.Set;
+
 @Controller
 @RequestMapping("/book")
 public class BookController {
 
+
+    private final Validator validator;
+
     private final BookService bookService;
 
-    public BookController(BookService bookService) {
+    public BookController(Validator validator, BookService bookService) {
+        this.validator = validator;
         this.bookService = bookService;
     }
 
@@ -20,10 +28,21 @@ public class BookController {
     @ResponseBody
     public String addBook() {
         ServiceBook serviceBook = new ServiceBook();
-        serviceBook.setTitle("Thinking in Java");
         serviceBook.setAuthor("Bruce Eckel");
 
-        bookService.save(serviceBook);
+        Set<ConstraintViolation<ServiceBook>> constraintViolations = validator.validate(serviceBook);
+
+        if (constraintViolations.isEmpty()) {
+            bookService.save(serviceBook);
+        } else {
+            constraintViolations.forEach(
+                    cv -> System.out.println(
+                            "cv.getPropertyPath() " + cv.getPropertyPath() +
+                                    " cv.getMessage() " + cv.getMessage()
+                    )
+            );
+        }
+
 
         return "ok" + serviceBook.getId();
     }

@@ -7,4 +7,6 @@ login:
 <form:input path="password"/>
 <br/>email:
 <form:input path="email"/>
+<form:select path="department" items="${departments}"
+             itemLabel="name" itemValue="id"/>
 
